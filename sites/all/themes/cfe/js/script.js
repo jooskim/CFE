@@ -14,7 +14,31 @@
 		//	'placement': 'bottom'
 		});
 		*/
-			
+		
+		// Fix IE8-related issues where the navigation menu breaks
+		var browserName  = navigator.appName;
+		var verOffsetMSIE= navigator.userAgent.indexOf("MSIE");
+		var fullVerMSIE = navigator.userAgent.substring(verOffsetMSIE+5);
+		var verMSIE = fullVerMSIE.substring(0,fullVerMSIE.indexOf(';'));
+		$('body').append(browserName + '<br>' + verMSIE);
+		
+		if(verOffsetMSIE != -1 && (verMSIE == '8.0' || verMSIE == '7.0')){
+			$('navigation li a').hover(function(){
+				$(this).css({'background-color': '#00274c', 'color': '#ffffff'});
+			});
+			$('navigation li a').mousedown(function(){
+				$(this).css({'background-color': '#00274c', 'color': '#ffffff'});
+			});
+			$('navigation ul li').hover(function(){
+				$('ul',this).css({
+				'display': 'block', 'margin-top': '1%', 'position': 'absolute', 'transition': 'all .2s ease-in-out', 'background': '#FFF', 'box-shadow': '0 0 5px #444', 'z-index': '110'});
+			$('ul li',this).css({'text-decoration': 'none', 'margin': '0', 'padding': '0', 'background': '#fff', 'width': 'auto', 'z-index': '120'});
+			});
+			$('navigation .menu .menu li.expanded').hover(function(){
+				$(this).css('left','0px');
+			});
+		}
+		
 		// Search bar hover show-and-hide
 		$('.search-container-inside').hover(
 			function() {
@@ -52,12 +76,45 @@
 			
 			if($('.view-people').length != 0) {
 				var locOfSnippet = $('div span[class="field-content imgHeader"] a:contains("'+currentObjName+'")').position().top - 180;
+				$('html,body').animate({scrollTop: locOfSnippet}, 300,function(){
+					var container = $('div span[class="field-content imgHeader"] a:contains("'+currentObjName+'")').parent().parent().parent();
+					container.animate({'backgroundColor':'#ffcb05'},350,function(){
+						container.animate({'backgroundColor':''},250);
+					});
+				});
 			}else if($('.view-classes').length != 0){
 				var courseNum = currentObjName.substr(0, currentObjName.indexOf("—"));
 				var locOfSnippet = $('.view-classes .attachment-after span a:contains('+courseNum+')').parent().parent().position().top + 15;
+				$('html,body').animate({scrollTop: locOfSnippet}, 300,function(){
+					var container = $('.view-classes .attachment-after span a:contains('+courseNum+')').parent().parent().parent();
+					container.animate({'backgroundColor':'#ffcb05'},350,function(){
+						container.animate({'backgroundColor':''},250);
+					});
+				});
 			}
-			$('html,body').animate({scrollTop: locOfSnippet}, 300);
+
 		});
+		
+		/* Fix the layout breakage of the teaser articles shown on the home page */
+		
+		if($('body').hasClass('page-frontpage')){
+			$('.newsItem').css('height', function(i){
+				var curHeight = parseInt($(this).css('height').substr(0, $(this).css('height').length - 2));
+				
+				if($('img', $(this).parent()).height() != null){
+					var imgHeight = $('img',this).height() + 44;
+				}else{
+					var imgHeight = curHeight;
+				}
+				
+				if(curHeight < imgHeight){
+					return imgHeight+'px';
+				}else{
+					return curHeight+'px';
+				}
+			});
+			
+		}
 		
 		/* -- Sidebar styling starts here -- */
 		
@@ -78,15 +135,19 @@
 		
 		// Highlight each item upon hovering
 		$('#block-views-latest-event-block-1 .newsItem').hover(function(){
-			$(this).css('background-color', 'rgba(0,75,150,1)');
+			$('a,span',this).css('color','#00274c');
+			$(this).css({'background-color': '#ffcb05', 'text-shadow': '1px 1px 2px #ffffff'});
 		},function(){
-			$(this).css('background-color', 'rgba(0,75,150,0.7)');
+			$('a,span',this).css('color','#ffffff');
+			$(this).css({'background-color': '#00274c', 'text-shadow': '1px 1px 2px #333333'});
 		});
 		
 		$('#block-views-latest-event-block-3 #wrapTitleDate').hover(function(){
-			$(this).css('background-color', 'rgba(0,75,150,1)');
+			$('a,span',this).css('color','#00274c');
+			$(this).css({'background-color': '#ffcb05', 'text-shadow': '1px 1px 2px #ffffff'});
 		},function(){
-			$(this).css('background-color', 'rgba(0,75,150,0.7)');
+			$('a,span',this).css('color','#ffffff');
+			$(this).css({'background-color': '#00274c', 'text-shadow': '1px 1px 2px #333333'});
 		});
 		
 		// Play icon shows up on hovering over the thumbnail of the video
@@ -121,17 +182,40 @@
 			}else{
 				$('#page_contents .col_1 #scrollToTop').fadeOut(250);
 			}
-			if($(document).height() > 1200 && $(document).scrollTop() >= 0 && scrollOffset >= 895){
-				$('.wrapper #page_contents .col_1').css("top",$(document).scrollTop());
+			
+			// need to check this again whether the code below breaks other pages that have 'page-node-' classes
+				if($('body').hasClass('page-node-') && ($('body').hasClass('page-node-40') || $('body').hasClass('page-node-236') || $('body').hasClass('page-node-325') || $('body').hasClass('page-node-29') || $('body').hasClass('page-node-237') || $('body').hasClass('page-node-47') || $('body').hasClass('page-node-62') || $('body').hasClass('page-node-238'))){
+					// when scroll goes below 300px, reset the col_1 location
+					if($(document).scrollTop() < 300){
+						$('.wrapper #page_contents .col_1').css("top",0);
+					}
+			
+				if($(document).height() > 1500 && $(document).scrollTop() >= 0 && scrollOffset >= 895 && $(document).scrollTop() > 300){
+					$('.wrapper #page_contents .col_1').css("top",$(document).scrollTop()-300);
+				}
 			}else{
 				
+				if($(document).height() > 1200 && $(document).scrollTop() >= 0 && scrollOffset >= 895){
+					$('.wrapper #page_contents .col_1').css("top",$(document).scrollTop());
+				}
 			}
 		});
 		
+		// On the home page, move the video section above the Twitter section
+		if($('body').hasClass('page-frontpage')){
+			var videoContent = "<div class='sidebarMargin'>"+$('.view-latest-event .attachment-after .view-display-id-attachment_2').html()+"</div>";
+			$('.view-latest-event .attachment-after .view-display-id-attachment_2').empty();
+			$('#page_contents .region-sidebar-first .#block-block-2 .content div[class=tweets-pulled-listing]').after("<br>"+videoContent);
+		}
 		/* -- Sidebar styling ends here -- */
 		
-		/* -- Archive view layout in News page starts here -- */
-		if($('body').hasClass('page-news-')){
+		/* -- Classes page: Change the style of 'Link to Syllabus' links so that they stand out more -- */
+		if($('body').hasClass('page-classes')){
+			$('.views-field-field-syllabus .field-content a').css({'color':'#0d57aa', 'border-bottom':'1px dotted #0d57aa'});
+		}
+		
+		/* -- Archive view layout in News page / Events page starts here -- */
+		if($('body').hasClass('page-news-') || $('body').hasClass('page-events-')){
 			var loc = location.href.split('/');
 			var year = parseInt((loc[loc.length-1]/100));
 			var month = parseInt(loc[loc.length-1]) % year;
@@ -148,6 +232,139 @@
 			$('.wrapper #page_contents .col_2 .field-name-field-url .field-items .field-item').css('margin-top', '25px');
 		}
 		/* -- Article(External) view styling ends here -- */
+		
+		/* -- Reordering of the list items on Competitions and Conferences page + header styling-- */
+		if($('body').hasClass('page-competitions-conferences')){
+			var divInternational = $('.item-list:eq(0)').html();
+			var divStateOfMI = $('.item-list:eq(1)').html();
+			var divUofM = $('.item-list:eq(2)').html();
+			var divNational = $('.item-list:eq(3)').html();
+			$('.item-list:eq(0)').html(divUofM);
+			$('.item-list:eq(1)').html(divStateOfMI);
+			$('.item-list:eq(2)').html(divNational);
+			$('.item-list:eq(3)').html(divInternational);
+			
+			$('.item-list h3').replaceWith(function(){
+				return "<h2>"+$(this).text()+"</h2>";
+			});
+		}
+		
+		/* -- Reordering of the list items on Resources page + header styling -- */
+		if($('body').hasClass('page-resources')){
+			$('.item-list h3').replaceWith(function(){
+				return "<h2>"+$(this).text()+"</h2>";
+			});
+		}
+		
+		/* -- Reordering of the list items on Researchers Grants page + header styling -- */
+		if($('body').hasClass('page-researcher-grant')){
+			var divNational = $('.item-list:eq(0)').html();
+			var divUofM = $('.item-list:eq(1)').html();
+			var divInternational = $('.item-list:eq(2)').html();
+			var divStateOfMI = $('.item-list:eq(3)').html();
+			$('.item-list:eq(0)').html(divUofM);
+			$('.item-list:eq(1)').html(divStateOfMI);
+			$('.item-list:eq(2)').html(divNational);
+			$('.item-list:eq(3)').html(divInternational);
+			
+			$('.item-list h3').replaceWith(function(){
+				return "<h2>"+$(this).text()+"</h2>";
+			});
+		}
+		
+		/* -- Reordering of the list items on Funding page + header styling -- */
+		if($('body').hasClass('page-funding')){
+			var divStateOfMI = $('.item-list:eq(0)').html();
+			var divUofM = $('.item-list:eq(1)').html();
+			var divNational = $('.item-list:eq(2)').html();
+			$('.item-list:eq(0)').html(divUofM);
+			$('.item-list:eq(1)').html(divStateOfMI);
+			
+			$('.item-list h3').replaceWith(function(){
+				return "<h2>"+$(this).text()+"</h2>";
+			});
+		}
+		
+		/* -- Header styling on Grants page -- */
+		if($('body').hasClass('page-grants')){
+			$('.item-list h3').replaceWith(function(){
+				return "<h2>"+$(this).text()+"</h2>";
+			});
+		}
+		
+		/* -- Move the images on Student Groups page to the right and adjust the height of each div layer */
+		if($('body').hasClass('page-student-groups')){
+			$('.views-field-body').css('height', function(i){
+				var curHeight = parseInt($(this).css('height').substr(0, $(this).css('height').length - 2));
+				
+				if($('img', $(this).parent()).height() != null){
+					var imgHeight = $('img',$(this).parent()).height();
+				}else{
+					var imgHeight = curHeight;
+				}
+				
+				if(curHeight < imgHeight){
+					return imgHeight+'px';
+				}else{
+					return curHeight+30+'px';
+				}
+			});
+		}
+		
+	/* -- Landing page layout starts here -- */
+	if($('body').hasClass('page-node-') && $('body').hasClass('node-type-page') && ($('body').hasClass('page-node-40') || $('body').hasClass('page-node-236') || $('body').hasClass('page-node-325') || $('body').hasClass('page-node-29') || $('body').hasClass('page-node-237') || $('body').hasClass('page-node-47') || $('body').hasClass('page-node-62') || $('body').hasClass('page-node-238'))){
+		var col2 = $('#page_contents .col_2');
+		if($('body').hasClass('page-node-236')){
+			// About page
+			$('.wallTitle').text($('h2[class=title]',col2).text()).css('left', '830px');
+		}else if($('body').hasClass('page-node-325')){
+			// News page
+			$('.wallTitle').text($('h2[class=title]',col2).text()).css('left', '840px');
+		}else if($('body').hasClass('page-node-29')){
+			// Learn page
+			$('.wallTitle').text($('h2[class=title]',col2).text()).css('left', '840px');
+		}else if($('body').hasClass('page-node-40')){
+			// Participate page
+			$('.wallTitle').text($('h2[class=title]',col2).text()).css('left', '735px');
+		}else if($('body').hasClass('page-node-237')){
+			// Launch page
+			$('.wallTitle').text($('h2[class=title]',col2).text()).css('left', '812px');
+		}else if($('body').hasClass('page-node-47')){
+			// Educate page
+			$('.wallTitle').text($('h2[class=title]',col2).text()).css('left', '792px');
+		}else if($('body').hasClass('page-node-62')){
+			// Innovate page
+			$('.wallTitle').text($('h2[class=title]',col2).text()).css('left', '777px');
+		}else if($('body').hasClass('page-node-238')){
+			// Engage page
+			$('.wallTitle').text($('h2[class=title]',col2).text()).css('left', '810px');
+		}
+		
+		$('h2[class=title]',col2).hide();
+		var bg = $('.field-type-image img',col2).attr('src');
+		$('.landingPageWall').attr('style','background-image:'+'url('+bg+'); background-size: cover; background-position: center;');
+		//var timerTest;
+		//$('.landingPageWall').mousemove(function(e){
+		//	var originY, offset;
+		//	$(this).mousedown(function(e){
+		//		originY = e.pageY;
+		//		timerTest = setTimeout(function(){
+		//			$('.landingPageWall').css('background-position', '0% ' + e.pageY + '%');
+		//		}, 100);
+		//	});
+		//	
+		//	$(this).mouseup(function(e){
+		//		var offset = e.pageY - originY;
+		//		var proportion = offset / $('.landingPageWall').height() * 100;
+		//		//$('.landingPageWall').css('background-position','0% '+ proportion +'%');
+		//		clearTimeout(timerTest);
+		//	});
+		//});
+		$('.field-type-image',col2).hide();
+	}
+
+	/* -- Landing page layout ends here -- */
+
 	}); // ready
 	
 }(jQuery));

@@ -10,48 +10,48 @@
 <!-- Body Contents: Start -->
 <div class="wrapper">
 
-	<!-- Slideshow: Start -->
-	<div id="slideshow">
-		<div id="slideshow_photos">
-			<ul>
-			<?php
-				$slides = slideshow();
-				$i = 1;
-				foreach ($slides as $slide) {
-					echo "\n".'<li id="slideshow_photo'.$i.'"><img src="'.$base_path.'images/featured/large/'.$slide['photo'].'" width="1000" border="0" /><span>';
-					echo "\n".'<h2>'.htmlspecialchars($slide['title']).'</h2>';
-					if (strlen($slide['subtitle']) > 0) echo "\n".'<h3>'.htmlspecialchars($slide['subtitle']).'</h3>';
-					echo "\n".'<p>'.htmlspecialchars($slide['excerpt']);
-					echo '<a href="'.$slide['readmore'].'" class="button" target="_blank">READ MORE</a></p>';
-					echo "\n".'</span></li>';
-					$i++;
-				}
-			?>
-			</ul>
-		</div>
-
-		<!-- Slideshow Controls: Start -->
-		<div id="slideshow_controls">
-
-			<!-- Slideshow Thumbnails: Start -->
-			<div id="slideshow_controls_thumbnails">
+		<!-- Slideshow: Start -->
+		<div id="slideshow">
+			<div id="slideshow_photos">
 				<ul>
 				<?php
+					$slides = slideshow();
 					$i = 1;
 					foreach ($slides as $slide) {
-						echo "\n".'<li id="slideshow_thumbnail'.$i.'"><span><img src="'.$base_path.'images/featured/thumb/'.$slide['thumbnail'].'" width="172" height="96" /></span>';
-						echo "\n".'<div class="caption">'.htmlspecialchars($slide['title']).'</div>';
-						if ($i == 1) echo "\n".'<div id="selected"></div>';
-						echo "\n".'</li>';
+						echo "\n".'<li id="slideshow_photo'.$i.'"><img src="'.$base_path.'images/featured/large/'.$slide['photo'].'" width="1000" border="0" /><span>';
+						echo "\n".'<h2>'.htmlspecialchars($slide['title']).'</h2>';
+						if (strlen($slide['subtitle']) > 0) echo "\n".'<h3>'.htmlspecialchars($slide['subtitle']).'</h3>';
+						echo "\n".'<p>'.htmlspecialchars($slide['excerpt']);
+						echo '<a href="'.$slide['readmore'].'" class="button" target="_blank">READ MORE</a></p>';
+						echo "\n".'</span></li>';
 						$i++;
 					}
 				?>
 				</ul>
 			</div>
-			<!-- Slideshow Thumbnails: End -->
 
-		</div>
-		<!-- Slideshow Controls: End -->
+			<!-- Slideshow Controls: Start -->
+			<div id="slideshow_controls">
+
+				<!-- Slideshow Thumbnails: Start -->
+				<div id="slideshow_controls_thumbnails">
+					<ul>
+					<?php
+						$i = 1;
+						foreach ($slides as $slide) {
+							echo "\n".'<li id="slideshow_thumbnail'.$i.'"><span><img src="'.$base_path.'images/featured/thumb/'.$slide['thumbnail'].'" width="172" height="96" /></span>';
+							echo "\n".'<div class="caption">'.htmlspecialchars($slide['title']).'</div>';
+							if ($i == 1) echo "\n".'<div id="selected"></div>';
+							echo "\n".'</li>';
+							$i++;
+						}
+					?>
+					</ul>
+				</div>
+				<!-- Slideshow Thumbnails: End -->
+
+			</div>
+			<!-- Slideshow Controls: End -->
 		</div>
 		<!-- Slideshow: End -->
 

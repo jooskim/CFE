@@ -37,8 +37,26 @@ a:link,
 a:visited {
 	color: #024b96;
 }
+h2 a,
+h2 a:link,
+h2 a:visited,
+h3 a,
+h3 a:link,
+h3 a:visited {
+	color: #00274c;
+}
 a:hover,
-a:active {
+a:active,
+h2 a:hover,
+h2 a:active,
+h3 a:hover,
+h3 a:active {
+	color: #0371E2;
+}
+h2 a:hover,
+h2 a:active,
+h3 a:hover,
+h3 a:active {
 	color: #0371E2;
 }
 .content li {
@@ -46,7 +64,7 @@ a:active {
 }
 h1,
 h2.title {
-	color: #024b96;
+	color: #00274c;
 	font-family: 'Yanone Kaffeesatz', sans-serif;
 	font-size: 2.5em !important;
 	font-weight: 400;
@@ -54,7 +72,7 @@ h2.title {
 	padding: 0;
 }
 h2 {
-	color: #024b96;
+	color: #00274c;
 	/* font-family: 'Yanone Kaffeesatz', sans-serif; */
 	font-size: 1.5em;
 	margin: 0 !important;
@@ -108,12 +126,20 @@ img.photo,
 	border-radius: 2px;
 	border: 1px solid #888;
 	background: #0371E2;
+	/*
 	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#0371E2', endColorstr='#024B96');
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#0371E2), to(#024B96));
 	background-image: -moz-linear-gradient(top, #0371E2, #024B96);
 	background-image: -o-linear-gradient(top, #0371E2, #024B96);
 	background-image: -webkit-linear-gradient(top, #0371e2, #024b96);
 	background-image: linear-gradient(to bottom, #0371e2, #024b96);
+	*/
+	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#024b96', endColorstr='#00274c');
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#024b96), to(#00274c));
+	background-image: -moz-linear-gradient(top, #024b96, #00274c);
+	background-image: -o-linear-gradient(top, #024b96, #00274c);
+	background-image: -webkit-linear-gradient(top, #024b96, #00274c);
+	background-image: linear-gradient(to bottom, #024b96, #00274c);
 	color: #fff;
 	cursor: pointer;
 	display: inline-block;
@@ -315,17 +341,17 @@ header {
 	background-position: -141px 0;
 	margin-right: 8px;
 }
-navigation {
+#navigation {
 	position: absolute;
 	top: 50px;
-	right: auto;
+	left: 300px;
 	height: 35px;
 	width: 75%;
 	font-family: 'Yanone Kaffeesatz', sans-serif;
 	font-size: 1.2em;
 	z-index: 102;
 }
-navigation ul {
+#navigation ul {
 	list-style: none;
 	list-style-type: none;
 	margin: 0;
@@ -333,27 +359,28 @@ navigation ul {
 	z-index: 110;
 	zoom: 1;
 }
-navigation .menu li {
+#navigation .menu li {
 	display: inline;
 	float: left;
 	position: relative;
 	margin: 0;
 }
-navigation li a:hover,
-navigation li a:active,
-navigation li a.selected,
-navigation li a.active,
-navigation li a.active-trail {
-	background-color: #024b96;
+#navigation li a:hover,
+#navigation li a:active,
+#navigation li a.selected,
+#navigation li a.active,
+#navigation li a.active-trail {
+	/* background-color: #024b96; */
+	background-color: #00274c;
 	color: #fff;
 }
-navigation .content > .menu > li > a  {
+#navigation .content > .menu > li > a  {
 	padding: 5px;
 }
-navigation ul li ul {
+#navigation ul li ul {
 	display: none;
 }
-navigation ul li:hover ul {
+#navigation ul li:hover ul {
 	display: block;
 	margin-top: 1%;
 	position: absolute;
@@ -362,7 +389,7 @@ navigation ul li:hover ul {
 	box-shadow: 0 0 5px #444;
 	z-index: 110;
 }
-navigation ul li:hover ul li {
+#navigation ul li:hover ul li {
 	/*clear: left;*/
 	text-decoration: none;
 	margin: 0;
@@ -376,20 +403,20 @@ navigation ul li:hover ul li {
 	width: 199px;
 	top: -2px;
 }
-navigation .menu .menu a {
+#navigation .menu .menu a {
 	width: 160px;
 	display: block;
 	margin: 0;
 	padding: .75em 1em;
 }
-navigation .menu .menu .collapsed: last-child a,
-navigation .menu .menu .leaf: last-child a {
+#navigation .menu .menu .collapsed: last-child a,
+#navigation .menu .menu .leaf: last-child a {
 	padding-bottom: 1em;
 }
-navigation .menu .menu li.expanded:hover {
+#navigation .menu .menu li.expanded:hover {
 	left: 0px;
 }
-navigation .menu .menu .expanded .menu {
+#navigation .menu .menu .expanded .menu {
     box-shadow: 0 0 5px #444;
     display: none;
 	position: absolute;
@@ -611,8 +638,9 @@ body.page-node p {
 }
 #block-views-latest-event-block-1 .newsItem {
 	margin-top: 6px;
-	background-color: rgba(0, 75, 150, 0.7);
+	background-color: #00274c;
 	width: 240px;
+	text-shadow: 1px 1px 2px #333333;
 }
 #block-views-latest-event-block-1 img {
 	width: 220px;
@@ -628,7 +656,7 @@ span.view-latest-event-title a {
 	display: inline-block;
 	position: relative;
 	width: 210px;
-	
+
 	padding-top: 15px;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -637,7 +665,7 @@ span.view-latest-event-title a {
 #block-views-latest-event-block-1 .newsItem .views-field-field-published {
 	position: relative;
 	width: 210px;
-	
+
 	padding-bottom: 15px;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -646,7 +674,7 @@ span.view-latest-event-title a {
 }
 /* Events page - archive styling */
 .page-events- .view-events .view-display-id-attachment_1 h2 {
-	
+
 }
 /* Latest Video */
 #block-views-latest-event-block-3 h2 {
@@ -674,7 +702,8 @@ span.view-latest-event-title a {
 }
 #block-views-latest-event-block-3 #wrapTitleDate {
 	width: 210px;
-	background-color: rgba(0,75,150,0.7);
+	background-color: #00274c;
+	text-shadow: 1px 1px 2px #333333;
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-bottom: 15px;
@@ -684,7 +713,7 @@ span.view-latest-event-title a {
 #block-views-latest-event-block-3 #wrapTitleDate .field-content span {
 	font-size: 0.8em;
 	color: white;
-	
+
 }
 #block-views-latest-event-block-3 #wrapTitleDate h3 {
 	padding-bottom: 0px;

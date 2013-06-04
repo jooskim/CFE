@@ -1,9 +1,9 @@
 <header id="top-nav">
 	<div class="nav-wrapper">
 		<a href="<?php print $base_path; ?>" title="Center for Entrepreneurship"><span id="logo">Center for Entrepreneurship</span></a>
-		<navigation>
+		<div id="navigation">
 			<?php print render($page['header']); ?>
-		</navigation>
+		</div>
 		<div id="top_links">
 			<a data-toggle="tooltip" class="coe-link" href="http://www.engin.umich.edu/" target="_blank"><img src="<?php print $base_path . $directory; ?>/css/components/logo-coe.png" alt="University of Michigan - College of Engineering" height="16" border="0"></a>
 			<a data-toggle="tooltip" class="social-icons email" href="http://eepurl.com/lij3b" title="Subscribe to our Newsletter"></a>

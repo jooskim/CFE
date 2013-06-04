@@ -1,5 +1,4 @@
 <?php drupal_add_js(drupal_get_path('theme','cfe') . '/js/script.js'); ?>
-<?php drupal_add_js('http://code.jquery.com/color/jquery.color-2.1.2.min.js'); ?>
 <?php drupal_add_library('system', 'ui'); ?>
 
 <!-- Top Navigation: Start -->
@@ -9,9 +8,10 @@
 <!-- Body Contents: Start -->
 <div class="wrapper">
 		<div id="slideshow_shadow_special"></div>
-
+		<div class='landingPageWall' id='landingPageParticipate'><div class='wallTitle'></div></div>
 		<!-- Page Contents: Start -->
 		<div id="page_contents">
+
 			<?php if ($page['sidebar_first']): ?>
 				<div class="col_1">
 					<?php print render($page['sidebar_first']); ?>
